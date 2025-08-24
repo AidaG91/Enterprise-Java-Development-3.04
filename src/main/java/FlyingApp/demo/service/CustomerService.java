@@ -1,5 +1,6 @@
 package FlyingApp.demo.service;
 
+import FlyingApp.demo.enums.CustomerStatus;
 import FlyingApp.demo.model.Customer;
 import FlyingApp.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class CustomerService {
 
     public List<Customer> findByCustomerName(String customerName){
         return customerRepository.findByCustomerName(customerName);
+    }
+
+    public List<Customer> findByCustomerStatus(CustomerStatus customerStatus){
+        return customerRepository.findByCustomerStatus(customerStatus);
     }
 
     public boolean deleteCustomer(Long customerId) {

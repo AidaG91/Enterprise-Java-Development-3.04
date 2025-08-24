@@ -53,15 +53,25 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void testGetCustomerByName() throws Exception{
+    public void testGetCustomerByName() throws Exception {
         String customerName = "Helena";
 
         when(customerService.findByCustomerName(customerName)).thenReturn(List.of(helena));
 
-        mockMvc.perform(get("/customers/find/{customerName}", customerName).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/customers/find/by-name/{customerName}", customerName).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].customerName").value("Helena"));
 
+    }
+
+    @Test
+    public void testGetCustomerByStatus() throws Exception{
+        CustomerStatus customerStatus = CustomerStatus.NONE;
+
+        when(customerService.findByCustomerStatus(customerStatus)).thenReturn(List.of(helena));
+
+        mockMvc.perform(get("/customers/find/by-status/" + customerStatus.name()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].customerStatus").value("NONE"));
     }
 
 }

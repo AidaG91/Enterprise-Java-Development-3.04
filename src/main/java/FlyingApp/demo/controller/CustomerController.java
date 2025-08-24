@@ -1,5 +1,6 @@
 package FlyingApp.demo.controller;
 
+import FlyingApp.demo.enums.CustomerStatus;
 import FlyingApp.demo.model.Customer;
 import FlyingApp.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,19 @@ public class CustomerController {
          return customer.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/find/{customerName}")
+    @GetMapping("/find/by-name/{customerName}")
     public ResponseEntity<List<Customer>> getCustomerName(@PathVariable String customerName) {
         List<Customer> customers = customerService.findByCustomerName(customerName);
         return ResponseEntity.ok(customers);
     }
 
+    @GetMapping("/find/by-status/{customerStatus}")
+    public ResponseEntity<List<Customer>> getCustomerStatus (@PathVariable
+    CustomerStatus customerStatus) {
+        List<Customer> customers = customerService.findByCustomerStatus(customerStatus);
+        return ResponseEntity.ok(customers);
+
+    }
 
     @PutMapping("/{customerId}")
     public ResponseEntity<Customer> putCustomerById(@PathVariable Long customerId, @RequestBody Customer customer) {
