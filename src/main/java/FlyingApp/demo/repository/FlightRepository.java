@@ -15,6 +15,8 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     List<Flight> findByAircraft(String aircraft);
 
+    List<Flight> findByFlightMileageBetween(Integer start, Integer end);
+
     @Query("SELECT f from Flight f WHERE f.flightMileage > :minMileage")
     List<Flight> findFlightsWithMileageGreaterThan(@Param("minMileage") Integer minMileage);
 }

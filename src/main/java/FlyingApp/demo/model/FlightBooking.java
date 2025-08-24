@@ -12,11 +12,11 @@ public class FlightBooking {
     private Long bookingId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+   // @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customerId;
 
     @ManyToOne
-    @JoinColumn(name = "flight_id", referencedColumnName = "flightId")
+  //  @JoinColumn(name = "flight_id", referencedColumnName = "flightId")
     private Flight flightId;
 
     // Constructor

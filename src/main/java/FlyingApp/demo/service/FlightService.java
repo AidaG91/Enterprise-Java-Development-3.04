@@ -47,6 +47,15 @@ public class FlightService {
         return flightRepository.findByFlightMileage(flightMileage);
     }
 
+    public List<Flight> findByMileageRange (Integer startMileage, Integer endMileage) {
+        return flightRepository.findByFlightMileageBetween(startMileage, endMileage);
+    }
+
+    public List<Flight> findFlightsWithMileageGreaterThan(Integer minMileage) {
+        return flightRepository.findFlightsWithMileageGreaterThan(minMileage);
+    }
+
+
     public boolean deleteFlight(Long flightId) {
         if (flightRepository.existsById(flightId)) {
             flightRepository.deleteById(flightId);
