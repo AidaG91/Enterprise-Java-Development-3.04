@@ -45,10 +45,15 @@ public class FlightController {
         return ResponseEntity.ok(flights);
     }
 
-    @GetMapping("/find/by-aircraft/{aircraft}")
+    @GetMapping("/find/by-aircraft/exact/{aircraft}")
     public ResponseEntity<List<Flight>> getAircraft (@PathVariable String aircraft){
         List<Flight> aircrafts = flightService.findByAircraft(aircraft);
         return ResponseEntity.ok(aircrafts);
+    }
+
+    @GetMapping("/find/by-aircraft/contains/{keyword}")
+    public ResponseEntity<List<Flight>> getFlightsByAircraft(@PathVariable String keyword) {
+        return ResponseEntity.ok(flightService.findByAircraftContaining(keyword));
     }
 
     @GetMapping("/find/by-mileage/{flightMileage}")

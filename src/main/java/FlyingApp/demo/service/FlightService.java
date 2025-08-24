@@ -43,6 +43,10 @@ public class FlightService {
         return flightRepository.findByAircraft(aircraft);
     }
 
+    public List<Flight> findByAircraftContaining(String keyword) {
+        return flightRepository.findByAircraftContainingIgnoreCase(keyword);
+    }
+
     public List<Flight> findByFlightMileage(Integer flightMileage) {
         return flightRepository.findByFlightMileage(flightMileage);
     }

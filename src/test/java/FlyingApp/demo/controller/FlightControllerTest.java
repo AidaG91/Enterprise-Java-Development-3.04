@@ -60,4 +60,17 @@ public class FlightControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$[0].flightNumber").value("DL143"));
    }
+
+    @Test
+    public void testGetFlightsByAircraftContainingKeyword() throws Exception {
+        String keyword = "Boeing";
+
+        when(flightService.findByAircraftContaining(keyword)).thenReturn(List.of(boeing));
+
+        mockMvc.perform(get("/flights/find/by-aircraft/contains/{keyword}", keyword)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].aircraft").value("Boeing 747"));
+    }
+
 }
