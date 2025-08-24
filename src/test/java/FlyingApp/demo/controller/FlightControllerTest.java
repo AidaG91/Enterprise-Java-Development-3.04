@@ -11,10 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FlightController.class)
 
@@ -46,5 +48,16 @@ public class FlightControllerTest {
                .andExpect(jsonPath("$.aircraft").value("Boeing 747"))
                .andExpect(jsonPath("$.totalAircraftSeats").value(400))
                .andExpect(jsonPath("$.flightMileage").value(135));
+   }
+
+   @Test
+    public void testGetFlightByFlightNumber() throws Exception {
+       String flightNumber = "DL143";
+
+       when(flightService.findByFlightNumber(flightNumber)).thenReturn(List.of(boeing));
+
+       mockMvc.perform(get("/flights/find/by-number/{flightNumber}", flightNumber).contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$[0].flightNumber").value("DL143"));
    }
 }
