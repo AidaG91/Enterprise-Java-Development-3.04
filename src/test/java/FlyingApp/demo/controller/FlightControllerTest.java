@@ -3,6 +3,7 @@ package FlyingApp.demo.controller;
 import FlyingApp.demo.model.Flight;
 import FlyingApp.demo.service.FlightService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,18 @@ public class FlightControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].aircraft").value("Boeing 747"));
+    }
+
+    @Test
+    void shouldFindFlightsWithMileageGreaterThan500() throws Exception {
+        when(flightService.findFlightsWithMileageGreaterThan(500)).thenReturn(List.of(airbus));
+
+
+        mockMvc.perform(get("/flights/find/mileage/min")
+                        .param("minMileage", "500")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].flightMileage").value(Matchers.greaterThan(500)));
     }
 
 }
